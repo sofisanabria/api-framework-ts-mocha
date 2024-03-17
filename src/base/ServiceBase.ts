@@ -1,4 +1,4 @@
-import { AxiosResponse, type AxiosRequestConfig } from "axios";
+import { AxiosResponse, type AxiosRequestConfig, AxiosInstance } from "axios";
 import { ApiClient } from "./ApiClient.js";
 import { type SessionResponse } from "../models/responses/SessionResponse";
 import { AuthService } from "../models/services/AuthService.js";
@@ -9,8 +9,8 @@ export class ServiceBase {
   protected url: string;
   protected defaultConfig: AxiosRequestConfig;
 
-  constructor(endpointPath: string) {
-    this.api = ApiClient.getInstance();
+  constructor(endpointPath: string, customClientConfig?: (client: AxiosInstance) => void) {
+    this.api = ApiClient.getInstance(customClientConfig);
     this.url = this.baseUrl + endpointPath;
     this.defaultConfig = {};
   }

@@ -1,15 +1,17 @@
-import axios, { AxiosStatic } from "axios";
+import axios, { AxiosInstance } from "axios";
 import "dotenv/config";
 
 export abstract class ApiClientBase {
-  protected constructor() {
-    axios.defaults.headers.common = {
+  public static createAxiosInstance(): AxiosInstance {
+    const instance = axios.create({});
+    instance.defaults.headers.common = {
       "Content-Type": "application/json",
       Accept: "application/json",
     };
 
-    axios.defaults.validateStatus = () => true;
+    instance.defaults.validateStatus = () => true;
+    return instance;
   }
 
-  client: AxiosStatic = axios;
+  client: AxiosInstance = ApiClientBase.createAxiosInstance();
 }
